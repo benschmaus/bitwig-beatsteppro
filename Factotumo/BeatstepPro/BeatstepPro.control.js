@@ -45,14 +45,12 @@ function init() {
         return function(value) {
             println("param idx=" + i + ", value=" + value);
             paramVals[i] = value;
-            mo.sendMidi(176, encoderCCs[i], value);
         }
     }
     var macroTracker = function(i) {
         return function(value) {
             println("macro idx=" + i + ", value=" + value);
             macroVals[i] = value;
-            mo.sendMidi(176, encoderCCs[i+8], value);
         }
     }
     for (var i = 0; i < 8; i++) {
