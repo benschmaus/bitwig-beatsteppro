@@ -6,7 +6,8 @@ The script:
   * in control mode
     * encoders 1-8 control primary device parameters
     * encoders 9-16 control primary device macros
+  * supports clock sync from Bitwig; set sync to USB mode on BSP
 
 This script draws inspiration from https://github.com/justlep/bitwig/tree/master/doc/ArturiaBeatstepPro
 
-It's similar to https://github.com/cyhex/BeatstepProController but doesn't require a template to be loaded onto your BSP for the script to function.
+It's also similar to https://github.com/cyhex/BeatstepProController but doesn't require a template to be loaded onto your BSP for the script to function.
