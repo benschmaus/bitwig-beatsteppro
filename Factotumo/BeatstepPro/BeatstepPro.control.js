@@ -9,15 +9,15 @@ var bsp = {
   encoderCCs: [10,74,71,76,77,93,73,75,114,18,19,16,17,91,79,72]
 };
 
-// access primary track device and its parameters (including macros)
-var bitwig = {};
-
-bitwig.primaryDevice = null;
-bitwig.deviceParams = [];
+var bitwig = {
+  primaryDevice: null,
+  isPlaying: false,
+  isRecording: false,
+  cursorTrack: null,
+  cursorDevice: null
+};
 
 function init() {
-	  println("start init");
-
     var mo = host.getMidiOutPort(0);
     mo.setShouldSendMidiBeatClock(true);
 
@@ -40,33 +40,81 @@ function init() {
         macro.setIndication(true);
     }
 
+    bitwig.transport = host.createTransport();
+    bitwig.transport.addIsPlayingObserver(function(isPlaying) { bitwig.isPlaying = isPlaying; });
+    bitwig.transport.addIsRecordingObserver(function(isRecording) { bitwig.isRecording = isRecording; });
+
+    bitwig.cursorTrack = host.createArrangerCursorTrack(8, 8);
+    bitwig.cursorDevice = host.createEditorCursorDevice();
+
     println("done init");
 }
 
 function onMidi(status, data1, data2) {
    var command = status & 0xf0;
    var channel = (status & 0x0f) + 1;
-   //println("channel=" + channel + ", command=" + command + ", data1=" + data1 + ", data2=" + data2);
+   println("channel=" + channel + ", command=" + command + ", data1=" + data1 + ", data2=" + data2);
 
-   var ccIdx = bsp.encoderCCs.indexOf(data1);
-   //println("ccIdx=" + ccIdx);
+   if (command == 176) {
+     var encoderCCIdx = bsp.encoderCCs.indexOf(data1);
 
-   if (ccIdx != -1) {
-       if (ccIdx < 8) {
-           handleEncoderChange(data2, bitwig.primaryDevice.getParameter(ccIdx));
-       } else {
-           handleEncoderChange(data2, bitwig.primaryDevice.getMacro(ccIdx - 8).getAmount());
-       }
+     if (encoderCCIdx != -1) {
+         if (encoderCCIdx < 8) {
+             handleEncoderChange(data2, bitwig.primaryDevice.getParameter(encoderCCIdx));
+         } else {
+             handleEncoderChange(data2, bitwig.primaryDevice.getMacro(encoderCCIdx - 8).getAmount());
+         }
+     } else {
+        switch (data1) {
+          /* these don't work well when getting clock data from bitwig in usb mode
+          case 54:
+            doActionOnGateOpen(data2,
+              function() {
+                if (!bitwig.isPlaying) {
+                  bitwig.transport.play();
+                } else {
+                  bitwig.transport.stop();
+                }    
+              });
+            break;
+          case 51:
+            doActionOnGateOpen(data2, function() {
+              bitwig.transport.stop();  
+            });
+            break;
+          case 50:
+            doActionOnGateOpen(data2, function() {
+              if (!bitwig.isRecording) {
+                bitwig.transport.record();
+              } else {
+                bitwig.transport.stop();
+              }
+            });
+            break;
+            */
+          case 20:
+              doActionOnGateOpen(data2, function() { bitwig.cursorTrack.selectPrevious(); })
+            break;
+          case 21:
+            doActionOnGateOpen(data2, function() { bitwig.cursorTrack.selectNext(); })
+            break;
+          default:
+            break;
+        }
+     }
    }
 
 }
 
-function handleEncoderChange(value, paramOrMacro) {
-  if (value < 64) {
-    paramOrMacro.inc(-1, 128);
-  } else if (value > 64) {
-    paramOrMacro.inc(1, 128);
+function doActionOnGateOpen(data2, f) {
+  if (data2 == 127) {
+    f();
   }
+}
+
+function handleEncoderChange(value, paramOrMacro) {
+    // -1 for knob turn left, +1 for knob turn right
+    paramOrMacro.inc(value - 64, 128);
 }
 
 function onSysex(sysex) { }
