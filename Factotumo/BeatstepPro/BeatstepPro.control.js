@@ -54,7 +54,7 @@ function init() {
 function onMidi(status, data1, data2) {
    var command = status & 0xf0;
    var channel = (status & 0x0f) + 1;
-   println("channel=" + channel + ", command=" + command + ", data1=" + data1 + ", data2=" + data2);
+   //println("channel=" + channel + ", command=" + command + ", data1=" + data1 + ", data2=" + data2);
 
    if (command == 176) {
      var encoderCCIdx = bsp.encoderCCs.indexOf(data1);
@@ -114,7 +114,6 @@ function onMidi(status, data1, data2) {
         }
      }
    }
-
 }
 
 function doActionOnGateOpen(data2, f) {
