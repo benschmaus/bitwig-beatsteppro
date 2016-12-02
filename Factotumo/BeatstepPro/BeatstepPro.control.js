@@ -124,6 +124,7 @@ function doActionOnGateOpen(data2, f) {
 }
 
 function handleEncoderChange(value, paramOrMacro) {
+    if (value == 64) { return; }
     // -1 for knob turn left, +1 for knob turn right
     paramOrMacro.inc(value - 64, 128);
 }
