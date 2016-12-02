@@ -46,6 +46,7 @@ function init() {
 
     bitwig.cursorTrack = host.createArrangerCursorTrack(8, 8);
     bitwig.cursorDevice = host.createEditorCursorDevice();
+    bitwig.deviceBrowser = bitwig.cursorDevice.createDeviceBrowser(2,2);
 
     println("done init");
 }
@@ -66,38 +67,48 @@ function onMidi(status, data1, data2) {
          }
      } else {
         switch (data1) {
-          /* these don't work well when getting clock data from bitwig in usb mode
-          case 54:
-            doActionOnGateOpen(data2,
-              function() {
-                if (!bitwig.isPlaying) {
-                  bitwig.transport.play();
-                } else {
-                  bitwig.transport.stop();
-                }    
-              });
-            break;
-          case 51:
-            doActionOnGateOpen(data2, function() {
-              bitwig.transport.stop();  
-            });
-            break;
-          case 50:
-            doActionOnGateOpen(data2, function() {
-              if (!bitwig.isRecording) {
-                bitwig.transport.record();
-              } else {
-                bitwig.transport.stop();
-              }
-            });
-            break;
-            */
           case 20:
-              doActionOnGateOpen(data2, function() { bitwig.cursorTrack.selectPrevious(); })
+            doActionOnGateOpen(data2, function() {
+              bitwig.cursorTrack.selectPrevious();
+              bitwig.cursorTrack.getPrimaryDevice().selectInEditor();
+            })
             break;
           case 21:
-            doActionOnGateOpen(data2, function() { bitwig.cursorTrack.selectNext(); })
+            doActionOnGateOpen(data2, function() {
+              bitwig.cursorTrack.selectNext();
+              bitwig.cursorTrack.getPrimaryDevice().selectInEditor();
+            })
             break;
+          case 22:
+            doActionOnGateOpen(data2, function() {
+              bitwig.cursorDevice.selectPrevious();
+            })
+            break;
+          case 23:
+            doActionOnGateOpen(data2, function() {
+              bitwig.cursorDevice.selectNext();
+            })
+            break;
+          case 24:
+            doActionOnGateOpen(data2, function() {
+              bitwig.deviceBrowser.cancelBrowsing();
+            })
+            break;
+          case 25:
+            doActionOnGateOpen(data2, function() {
+              bitwig.deviceBrowser.startBrowsing();
+            })
+            break;
+          case 26:
+            doActionOnGateOpen(data2, function() {
+              bitwig.deviceBrowser.getPresetSession().getCursorResult().selectPrevious();
+            })
+            break;
+          case 27:
+            doActionOnGateOpen(data2, function() {
+              bitwig.deviceBrowser.getPresetSession().getCursorResult().selectNext();
+            })
+            break;  
           default:
             break;
         }
