@@ -11,8 +11,6 @@ var bsp = {
 
 var bitwig = {
   primaryDevice: null,
-  isPlaying: false,
-  isRecording: false,
   cursorTrack: null,
   cursorDevice: null
 };
@@ -39,10 +37,6 @@ function init() {
         var macro = bitwig.primaryDevice.getMacro(i).getAmount();
         macro.setIndication(true);
     }
-
-    bitwig.transport = host.createTransport();
-    bitwig.transport.addIsPlayingObserver(function(isPlaying) { bitwig.isPlaying = isPlaying; });
-    bitwig.transport.addIsRecordingObserver(function(isRecording) { bitwig.isRecording = isRecording; });
 
     bitwig.cursorTrack = host.createArrangerCursorTrack(8, 8);
     bitwig.cursorDevice = host.createEditorCursorDevice();
