@@ -67,6 +67,16 @@ function onMidi(status, data1, data2) {
             bitwig.cursorTrack.getMute().toggle();
           });
           break;
+        case 36:
+          doActionOnGateOpen(data2, function() {
+            bitwig.cursorTrack.getVolume().inc(-5, 128);
+          });
+          break;
+        case 37:
+          doActionOnGateOpen(data2, function() {
+            bitwig.cursorTrack.getVolume().inc(5, 128);
+          });
+          break;
         default:
           break;
       }
