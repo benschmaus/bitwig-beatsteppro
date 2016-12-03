@@ -24,6 +24,6 @@ This script draws inspiration from https://github.com/justlep/bitwig/tree/master
 
 **Installation**
 
-  1. Get a copy of the release zip or clone this repo.
+  1. Get a copy of the [latest release zip](https://github.com/benschmaus/bitwig-beatsteppro/releases/tag/v1.0.0) or clone this repo.
   2. Copy (if using zip, unzip first) the Factotumo directory to your Bitwig Controller Scripts directory.  On Mac this is ~/Documents/Bitwig\ Studio/Controller\ Scripts/
   3. If you're using other Factotumo Bitwig controller scripts already then copy the BeatstepPro directory to the existing Factotumo directory under the Bitwig Controller Scripts dir.
