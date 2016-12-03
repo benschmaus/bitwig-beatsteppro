@@ -22,9 +22,8 @@ For the encoders and step buttons to work correctly, you need to load the "Beats
 
 This script draws inspiration from https://github.com/justlep/bitwig/tree/master/doc/ArturiaBeatstepPro and https://github.com/cyhex/BeatstepProController.
 
-*Installation*
+**Installation**
 
-  # Get a copy of the release zip or clone this repo.
-  # Copy (if using zip, unzip first) the Factotumo directory to your Bitwig Controller Scripts directory.  On Mac this is ~/Documents/Bitwig\ Studio/Controller\ Scripts/
-  # If you're using other Factotumo Bitwig controller scripts already then copy the BeatstepPro directory to the existing Factotumo directory under the Bitwig Controller Scripts dir.
-  
+  1. Get a copy of the release zip or clone this repo.
+  2. Copy (if using zip, unzip first) the Factotumo directory to your Bitwig Controller Scripts directory.  On Mac this is ~/Documents/Bitwig\ Studio/Controller\ Scripts/
+  3. If you're using other Factotumo Bitwig controller scripts already then copy the BeatstepPro directory to the existing Factotumo directory under the Bitwig Controller Scripts dir.
