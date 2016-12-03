@@ -56,7 +56,29 @@ function onMidi(status, data1, data2) {
    var channel = (status & 0x0f) + 1;
    //println("channel=" + channel + ", command=" + command + ", data1=" + data1 + ", data2=" + data2);
 
-   if (command == 176) {
+   if (status == 146) {
+      switch (data1) {
+        case 44:
+          doActionOnGateOpen(data2, function() {
+            bitwig.cursorTrack.getArm().toggle();
+          });
+          break;
+        case 45:
+          doActionOnGateOpen(data2, function() {
+            bitwig.cursorTrack.getSolo().toggle(false);
+          });
+          break;
+        case 46:
+          doActionOnGateOpen(data2, function() {
+            bitwig.cursorTrack.getMute().toggle();
+          });
+          break;
+        default:
+          break;
+      }
+   }
+
+   if (status == 178) { // expect messages in control mode to come over channel 3
      var encoderCCIdx = bsp.encoderCCs.indexOf(data1);
 
      if (encoderCCIdx != -1) {
@@ -71,44 +93,49 @@ function onMidi(status, data1, data2) {
             doActionOnGateOpen(data2, function() {
               bitwig.cursorTrack.selectPrevious();
               bitwig.cursorTrack.getPrimaryDevice().selectInEditor();
-            })
+            });
             break;
           case 21:
             doActionOnGateOpen(data2, function() {
               bitwig.cursorTrack.selectNext();
               bitwig.cursorTrack.getPrimaryDevice().selectInEditor();
-            })
+            });
             break;
           case 22:
             doActionOnGateOpen(data2, function() {
               bitwig.cursorDevice.selectPrevious();
-            })
+            });
             break;
           case 23:
             doActionOnGateOpen(data2, function() {
               bitwig.cursorDevice.selectNext();
-            })
+            });
             break;
           case 24:
             doActionOnGateOpen(data2, function() {
               bitwig.deviceBrowser.cancelBrowsing();
-            })
+            });
             break;
           case 25:
             doActionOnGateOpen(data2, function() {
               bitwig.deviceBrowser.startBrowsing();
-            })
+            });
             break;
           case 26:
             doActionOnGateOpen(data2, function() {
               bitwig.deviceBrowser.getPresetSession().getCursorResult().selectPrevious();
-            })
+            });
             break;
           case 27:
             doActionOnGateOpen(data2, function() {
               bitwig.deviceBrowser.getPresetSession().getCursorResult().selectNext();
-            })
-            break;  
+            });
+            break;
+          case 28:
+            doActionOnGateOpen(data2, function() {
+              bitwig.deviceBrowser.commitSelectedResult();
+            });
+            break;
           default:
             break;
         }
@@ -117,7 +144,7 @@ function onMidi(status, data1, data2) {
 }
 
 function doActionOnGateOpen(data2, f) {
-  if (data2 == 127) {
+  if (data2 > 0) {
     f();
   }
 }
