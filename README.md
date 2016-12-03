@@ -3,7 +3,7 @@ Bitwig controller script for Arturia Beatstep Pro.
 The script:
   * creates 3 note inputs: sequencer 1, sequencer 2, and drum
   * uses the default channels of 1, 2, and 10 for each of the Beatstep Pro's sequencers
-  * expects control mode to be channel 3, which supports
+  * expects control mode to be channel 3, which enables
     * encoders 1-8 control primary device parameters
     * encoders 9-16 control primary device macros
     * steps 1 / 2 are previous track / next track
