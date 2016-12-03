@@ -21,3 +21,10 @@ For the encoders and step buttons to work correctly, you need to load the "Beats
   * the step buttons are configured to send CCs to both MIDI and USB ports (factory template doesn't send to USB+MIDI, just MIDI)
 
 This script draws inspiration from https://github.com/justlep/bitwig/tree/master/doc/ArturiaBeatstepPro and https://github.com/cyhex/BeatstepProController.
+
+*Installation*
+
+  # Get a copy of the release zip or clone this repo.
+  # Copy (if using zip, unzip first) the Factotumo directory to your Bitwig Controller Scripts directory.  On Mac this is ~/Documents/Bitwig\ Studio/Controller\ Scripts/
+  # If you're using other Factotumo Bitwig controller scripts already then copy the BeatstepPro directory to the existing Factotumo directory under the Bitwig Controller Scripts dir.
+  
