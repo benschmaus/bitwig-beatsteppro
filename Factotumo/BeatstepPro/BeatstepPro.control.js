@@ -40,7 +40,7 @@ function init() {
 
     bitwig.cursorTrack = host.createArrangerCursorTrack(8, 8);
     bitwig.cursorDevice = host.createEditorCursorDevice();
-    bitwig.deviceBrowser = bitwig.cursorDevice.createDeviceBrowser(2,2);
+    bitwig.deviceBrowser = bitwig.cursorDevice.createDeviceBrowser(8,8);
 
     println("done init");
 }
@@ -117,27 +117,23 @@ function onMidi(status, data1, data2) {
             break;
           case 24:
             doActionOnGateOpen(data2, function() {
-              bitwig.deviceBrowser.cancelBrowsing();
+              bitwig.deviceBrowser.startBrowsing();
+              bitwig.cursorBrowingSession = bitwig.deviceBrowser.createCursorSession();
             });
             break;
           case 25:
             doActionOnGateOpen(data2, function() {
-              bitwig.deviceBrowser.startBrowsing();
+              bitwig.deviceBrowser.commitSelectedResult();
             });
             break;
           case 26:
             doActionOnGateOpen(data2, function() {
-              bitwig.deviceBrowser.getPresetSession().getCursorResult().selectPrevious();
+              bitwig.cursorBrowingSession.getCursorResult().selectPrevious();
             });
             break;
           case 27:
             doActionOnGateOpen(data2, function() {
-              bitwig.deviceBrowser.getPresetSession().getCursorResult().selectNext();
-            });
-            break;
-          case 28:
-            doActionOnGateOpen(data2, function() {
-              bitwig.deviceBrowser.commitSelectedResult();
+              bitwig.cursorBrowingSession.getCursorResult().selectNext();
             });
             break;
           default:
