@@ -4,13 +4,13 @@ The script:
   * creates 3 note inputs: sequencer 1, sequencer 2, and drum
   * uses the default channels of 1, 2, and 10 for each of the Beatstep Pro's sequencers
   * expects control mode to be channel 3, which enables
-    * encoders 1-8 control primary device parameters
-    * encoders 9-16 control primary device macros
+    * encoders 1-8 control cursor device parameters
+    * encoders 9-16 control cursor device macros
     * steps 1 / 2 are previous track / next track
     * steps 3 / 4 are previous device / next device on selected track
     * steps 5 / 6 close / open preset browser for selected device
     * steps 7 / 8 are previous / next preset in preset browser
-    * step 9 closes preset browser and switches to selected preset
+    * step 9 toggles cursor device off / on
     * top row pads 1,2,3 toggle record arm, solo, mute for selected track
     * bottom row pads 1 / 2 decrease / increase selected track volume
   * supports clock sync from Bitwig; set sync to USB mode on BSP
