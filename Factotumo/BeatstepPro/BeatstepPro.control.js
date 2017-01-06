@@ -87,22 +87,20 @@ function onMidi(status, data1, data2) {
 
      if (encoderCCIdx != -1) {
          if (encoderCCIdx < 8) {
-             handleEncoderChange(data2, bitwig.primaryDevice.getParameter(encoderCCIdx));
+             handleEncoderChange(data2, bitwig.cursorDevice.getParameter(encoderCCIdx));
          } else {
-             handleEncoderChange(data2, bitwig.primaryDevice.getMacro(encoderCCIdx - 8).getAmount());
+             handleEncoderChange(data2, bitwig.cursorDevice.getMacro(encoderCCIdx - 8).getAmount());
          }
      } else {
         switch (data1) {
           case 20:
             doActionOnGateOpen(data2, function() {
               bitwig.cursorTrack.selectPrevious();
-              bitwig.cursorTrack.getPrimaryDevice().selectInEditor();
             });
             break;
           case 21:
             doActionOnGateOpen(data2, function() {
               bitwig.cursorTrack.selectNext();
-              bitwig.cursorTrack.getPrimaryDevice().selectInEditor();
             });
             break;
           case 22:
@@ -134,6 +132,11 @@ function onMidi(status, data1, data2) {
           case 27:
             doActionOnGateOpen(data2, function() {
               bitwig.cursorBrowingSession.getCursorResult().selectNext();
+            });
+            break;
+          case 28:
+            doActionOnGateOpen(data2, function() {
+              bitwig.cursorDevice.toggleEnabledState();
             });
             break;
           default:
