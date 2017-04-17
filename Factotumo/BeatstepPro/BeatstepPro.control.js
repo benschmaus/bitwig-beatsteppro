@@ -1,9 +1,8 @@
 loadAPI(1);
 
-host.defineController("Factotumo", "Arturia BSP", "1.0", "8fbd683a-773d-4815-9959-7073da138a19");
-host.addDeviceNameBasedDiscoveryPair(["Arturia BeatStep Pro"], ["Arturia BeatStep Pro"]);
+host.defineController("Factotumo", "Arturia BSP", "2.0", "9694E601-0A0E-4535-8A7A-2F935A1BB285");
+//host.addDeviceNameBasedDiscoveryPair(["Arturia BeatStep Pro","Arturia BeatStep Pro Arturia BeatStepPro"],["Arturia BeatStep Pro","Arturia BeatStep Pro Arturia BeatStepPro"]);
 host.defineMidiPorts(1, 1);
-
 
 var bsp = {
   encoderCCs: [10,74,71,76,77,93,73,75,114,18,19,16,17,91,79,72]
@@ -17,7 +16,6 @@ var bitwig = {
 
 function init() {
     var mo = host.getMidiOutPort(0);
-    mo.setShouldSendMidiBeatClock(true);
 
     var mi = host.getMidiInPort(0);
     mi.setMidiCallback(onMidi);
@@ -41,7 +39,7 @@ function init() {
     bitwig.cursorTrack = host.createArrangerCursorTrack(8, 8);
     bitwig.cursorDevice = host.createEditorCursorDevice();
     bitwig.deviceBrowser = bitwig.cursorDevice.createDeviceBrowser(8,8);
-
+    
     println("done init");
 }
 
